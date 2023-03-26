@@ -79,7 +79,7 @@ describe("user can create a box and run it", () => {
     cy.get(".form-page__buttons > .btn-secondary").click();
     cy.contains("Перейти к жеребьевке").click({ force: true });
     cy.get(generalElements.submitButton).click();
-    cy.get(".santa-modal_content_buttons > .btn-main").click({ force: true });
+    cy.get(".santa-modal_content_buttons > .btn-main").click();
     cy.get(".picture-notice")
       .invoke("text")
       .then((text) => {
@@ -99,16 +99,19 @@ describe("user can create a box and run it", () => {
     cy.get(generalElements.notificationButton).click();
     cy.get(".notifications-item__message").contains(newBoxName);
   });
-  after("delete the box", () => {
+
+  after("delete the box API", () => {
+    cy.request({
+      method: "POST",
+      url: "/api/login",
+      body: {
+        email: users.userAutor.email,
+        password: users.userAutor.password,
+      },
+    });
     cy.request({
       method: "DELETE",
-      headers: {
-        Cookie:
-          "connect.sid=s%3AIhIligq2lq7tKjRASq36NEJDjRcU0VbL.wctv6uVkYxZcJsmZLyAH02FVyYdDo02697p6XI7EfUo",
-      },
-      url: `/api/box/${key}`,
-    }).then((response) => {
-      expect(response.status).to.equal(200);
+      url: "/api/box/" + key,
     });
   });
 });
