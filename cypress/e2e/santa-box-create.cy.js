@@ -54,7 +54,12 @@ describe("user can create a box and run it", () => {
     cy.get(generalElements.arrowRight).click();
     cy.get(generalElements.arrowRight).click();
     cy.get(inviteeBoxPage.wishesInput).type(wish1);
-    cy.get(generalElements.arrowRight).click();
+    cy.get(generalElements.arrowRight).click({ force: true });
+    cy.get(".picture-notice__title")
+      .invoke("text")
+      .then((text) => {
+        expect(text).to.contain("Это — анонимный чат с вашим Тайным Сантой");
+      });
   });
 
   it("User2 and user3 can creat a cards", () => {
@@ -74,22 +79,27 @@ describe("user can create a box and run it", () => {
       users.user3.email
     );
     cy.get(generalElements.submitButton).click();
+    cy.get(":nth-child(3) > .form-page-group__main > .tip")
+      .should("exist")
+      .and(
+        "contain.text",
+        "Карточки участников успешно созданы и приглашения уже отправляются."
+      );
   });
+
   it("Make a draw", () => {
     cy.get(".form-page__buttons > .btn-secondary").click();
     cy.contains("Перейти к жеребьевке").click({ force: true });
-    cy.get(generalElements.submitButton).click();
-    cy.get(".santa-modal_content_buttons > .btn-main").click();
-    cy.get(".picture-notice")
-      .invoke("text")
-      .then((text) => {
-        expect(text).to.contain("Жеребьевка проведена");
-      });
+    cy.get(generalElements.submitButton).click({ force: true });
+    cy.get(".santa-modal_content_buttons > .btn-main").click({ force: true });
+    cy.contains("Жеребьевка проведена").should("exist");
   });
 
   it("Author notification", () => {
     cy.get(generalElements.notificationButton).click();
-    cy.get(".notifications-item__message").contains(newBoxName);
+    cy.contains(
+      `У тебя появился подопечный в коробке "${newBoxName}". Скорее переходи по кнопке, чтобы узнать кто это!`
+    ).should("exist");
   });
 
   it("User2 and user3 notifications ", () => {
