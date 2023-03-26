@@ -110,4 +110,16 @@ describe("user can create a box and run it", () => {
     cy.get(generalElements.notificationButton).click();
     cy.get(".notifications-item__message").contains(newBoxName);
   });
+  after("delete the box", () => {
+    cy.request({
+      method: "DELETE",
+      headers: {
+        Cookie:
+          "connect.sid=s%3AIhIligq2lq7tKjRASq36NEJDjRcU0VbL.wctv6uVkYxZcJsmZLyAH02FVyYdDo02697p6XI7EfUo",
+      },
+      url: `/api/box/${key}`,
+    }).then((response) => {
+      expect(response.status).to.equal(200);
+    });
+  });
 });
