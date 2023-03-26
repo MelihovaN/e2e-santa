@@ -86,4 +86,15 @@ describe("user can create a box and run it", () => {
     );
     cy.get(generalElements.submitButton).click();
   });
+  it("Make a draw", () => {
+    cy.get(".form-page__buttons > .btn-secondary").click();
+    cy.contains("Перейти к жеребьевке").click({ force: true });
+    cy.get(generalElements.submitButton).click();
+    cy.get(".santa-modal_content_buttons > .btn-main").click({ force: true });
+    cy.get(".picture-notice")
+      .invoke("text")
+      .then((text) => {
+        expect(text).to.contain("Жеребьевка проведена");
+      });
+  });
 });
