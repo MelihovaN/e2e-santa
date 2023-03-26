@@ -20,16 +20,23 @@ describe("user can create a box and run it", () => {
   //пользователь 1 логинится
   //пользователь 1 запускает жеребьевку
   let newBoxName = faker.word.noun({ length: { min: 5, max: 10 } });
-  let wishes = faker.word.noun() + faker.word.adverb() + faker.word.adjective();
+  let wish1 = faker.word.adjective() + faker.word.noun();
   let maxAmount = 50;
   let currency = "Евро";
-  let inviteLink;
+  let key;
 
   it("user logins and create a box", () => {
     cy.visit("/login");
     cy.login(users.userAutor.email, users.userAutor.password);
     cy.contains("Создать коробку").click();
     cy.get(boxPage.boxNameField).type(newBoxName);
+    cy.get(":nth-child(3) > .frm")
+      .invoke("val")
+      .then((text) => {
+        key = text;
+        cy.log(key);
+      });
+
     cy.get(generalElements.arrowRight).click();
     cy.get(boxPage.sixthIcon).click();
     cy.get(generalElements.arrowRight).click();
@@ -39,6 +46,9 @@ describe("user can create a box and run it", () => {
     cy.get(generalElements.arrowRight).click();
     cy.get(generalElements.arrowRight).click();
     cy.get(generalElements.arrowRight).click();
+    cy.get(generalElements.arrowRight).click();
+    cy.get(generalElements.arrowRight).click();
+
     cy.get(dashboardPage.createdBoxName).should("have.text", newBoxName);
     cy.get(".layout-1__header-wrapper-fixed .toggle-menu-item span")
       .invoke("text")
@@ -49,48 +59,31 @@ describe("user can create a box and run it", () => {
       });
   });
 
-  it("add participants", () => {
-    cy.get(generalElements.submitButton).click();
-    cy.get(invitePage.inviteLink)
-      .invoke("text")
-      .then((link) => {
-        inviteLink = link;
-      });
-    cy.clearCookies();
-  });
-  it("approve as user1", () => {
-    cy.visit(inviteLink);
-    cy.get(generalElements.submitButton).click();
-    cy.contains("войдите").click();
-    cy.login(users.user1.email, users.user1.password);
-    cy.contains("Создать карточку участника").should("exist");
-    cy.get(generalElements.submitButton).click();
+  it("Author can create a card", () => {
+    cy.contains("Добавить участников").click({ force: true });
+    cy.get(".layout-row-center > .btn-main").click();
     cy.get(generalElements.arrowRight).click();
     cy.get(generalElements.arrowRight).click();
-    cy.get(inviteeBoxPage.wishesInput).type(wishes);
+    cy.get(inviteeBoxPage.wishesInput).type(wish1);
     cy.get(generalElements.arrowRight).click();
-    cy.get(inviteeDashboardPage.noticeForInvitee)
-      .invoke("text")
-      .then((text) => {
-        expect(text).to.contain("Это — анонимный чат с вашим Тайным Сантой");
-      });
-    cy.clearCookies();
   });
 
-  after("delete box", () => {
-    cy.visit("/login");
-    cy.login(users.userAutor.email, users.userAutor.password);
-    cy.get(
-      '.layout-1__header-wrapper-fixed > .layout-1__header > .header > .header__items > .layout-row-start > [href="/account/boxes"] > .header-item > .header-item__text > .txt--med'
-    ).click();
-    cy.get(":nth-child(1) > a.base--clickable > .user-card").first().click();
-    cy.get(
-      ".layout-1__header-wrapper-fixed > .layout-1__header-secondary > .header-secondary > .header-secondary__right-item > .toggle-menu-wrapper > .toggle-menu-button > .toggle-menu-button--inner"
-    ).click();
-    cy.contains("Архивация и удаление").click({ force: true });
-    cy.get(":nth-child(2) > .form-page-group__main > .frm-wrapper > .frm").type(
-      "Удалить коробку"
+  it("User2 and user3 can creat a cards", () => {
+    cy.get(generalElements.boxButton).click();
+    cy.contains(newBoxName).click();
+    cy.get(generalElements.submitButton).click();
+    cy.get(":nth-child(1) > .frm-wrapper > #input-table-0").type(
+      users.user2.name
     );
-    cy.get(".btn-service").click();
+    cy.get(":nth-child(2) > .frm-wrapper > #input-table-0").type(
+      users.user2.email
+    );
+    cy.get(":nth-child(3) > .frm-wrapper > #input-table-1").type(
+      users.user3.name
+    );
+    cy.get(":nth-child(4) > .frm-wrapper > #input-table-1").type(
+      users.user3.email
+    );
+    cy.get(generalElements.submitButton).click();
   });
 });
