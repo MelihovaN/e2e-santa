@@ -97,4 +97,21 @@ describe("user can create a box and run it", () => {
         expect(text).to.contain("Жеребьевка проведена");
       });
   });
+
+  it("Author notification", () => {
+    cy.get(
+      ".layout-1__header-wrapper-fixed > .layout-1__header > .header > .header__items > .layout-row-start > :nth-child(2) > .header-item__text > .txt--med"
+    ).click();
+    cy.get(".notifications-item__message").contains(newBoxName);
+  });
+
+  it("User2 and user3 notifications ", () => {
+    cy.clearCookies();
+    cy.visit("/login");
+    cy.login(users.user2.email, users.user2.password);
+    cy.get(
+      ".layout-1__header-wrapper-fixed > .layout-1__header > .header > .header__items > .layout-row-start > :nth-child(2) > .header-item__text > .txt--med"
+    ).click();
+    cy.get(".notifications-item__message").contains(newBoxName);
+  });
 });
