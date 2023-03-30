@@ -90,7 +90,7 @@ describe("user can create a box and run it", () => {
   it("Make a draw", () => {
     cy.get(".form-page__buttons > .btn-secondary").click();
     cy.contains("Перейти к жеребьевке").click({ force: true });
-    cy.get(generalElements.submitButton).click({ force: true });
+    cy.get(generalElements.startDraw).click({ force: true });
     cy.get(".santa-modal_content_buttons > .btn-main").click({ force: true });
     cy.contains("Жеребьевка проведена").should("exist");
   });

@@ -1,3 +1,11 @@
 {
-  "inviteLink": ":nth-child(2) > .form-page-group__main b"
+  "inviteLink": ":nth-child(2) > .form-page-group__main b",
+  "nameField1": ":nth-child(1) > .frm-wrapper > #input-table-0",
+  "emailField1": ":nth-child(2) > .frm-wrapper > #input-table-0",
+  "nameField2": ":nth-child(3) > .frm-wrapper > #input-table-1",
+  "emailField2": ":nth-child(4) > .frm-wrapper > #input-table-1",
+  "nameField3": ":nth-child(5) > .frm-wrapper > #input-table-2",
+  "emailField3": ":nth-child(6) > .frm-wrapper > #input-table-2",
+  "submitParticipants": ".form-page__buttons > .btn-main",
+  "backToBox": ".btn-secondary"
 }

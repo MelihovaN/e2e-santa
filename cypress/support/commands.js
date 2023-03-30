@@ -27,11 +27,31 @@
 const loginPage = require("../fixtures/pages/loginPage.json");
 const generalElements = require("../fixtures/pages/general.json");
 const inviteeBoxPage = require("../fixtures/pages/inviteeBoxPage.json");
+const boxPage = require("../fixtures/pages/boxPage.json");
+const settingsPage = require("../fixtures/pages/settingsPage.json");
 
 Cypress.Commands.add("login", (userName, password) => {
   cy.get(loginPage.loginField).type(userName);
   cy.get(loginPage.passwordField).type(password);
   cy.get(generalElements.submitButton).click({ force: true });
+});
+
+Cypress.Commands.add("enterText", (selector, text) => {
+  cy.get(selector).type(text);
+});
+
+Cypress.Commands.add("pressClick", (selector) => {
+  cy.get(selector).click();
+});
+
+Cypress.Commands.add("creatBox", () => {
+  cy.get(boxPage.arrowRight).click();
+  cy.get(boxPage.sixthIcon).click();
+  cy.get(boxPage.arrowRight).click({ force: true });
+  cy.contains("Стоимость подарков").should("exist");
+  cy.get(boxPage.arrowRight).click();
+  cy.contains("Дополнительные настройки").should("exist");
+  cy.get(boxPage.arrowRight).click();
 });
 
 Cypress.Commands.add("createCard", (userWish) => {
@@ -40,4 +60,13 @@ Cypress.Commands.add("createCard", (userWish) => {
   cy.get(generalElements.arrowRight).click();
   cy.get(inviteeBoxPage.wishesInput).type(userWish);
   cy.get(generalElements.arrowRight).click();
+});
+
+Cypress.Commands.add("deleteBox", (boxName) => {
+  cy.get(generalElements.boxesButton).click();
+  cy.contains(boxName).click();
+  cy.get(settingsPage.settings).click();
+  cy.get(settingsPage.deleteSettings).click();
+  cy.get(settingsPage.deleteField).type("Удалить коробку");
+  cy.get(settingsPage.deleteConfirm).click();
 });

@@ -1,6 +1,8 @@
 {
-  "arrowRight": ".btn-arrow-right",
   "submitButton": ".btn-main",
-  "boxButton": ".layout-1__header-wrapper-fixed > .layout-1__header > .header > .header__items > .layout-row-start > [href=\"/account/boxes\"] > .header-item > .header-item__text > .txt--med",
+  "arrowRight": ".btn-arrow-right",
+  "startDraw": ".heading__right > .btn-main",
+  "boxesButton": ".layout-1__header-wrapper-fixed > .layout-1__header > .header > .header__items > .layout-row-start > [href='/account/boxes'] > .header-item > .header-item__text",
+  "confirmDraw": ".santa-modal_content_buttons > .btn-main",
   "notificationButton": ".layout-1__header-wrapper-fixed > .layout-1__header > .header > .header__items > .layout-row-start > :nth-child(2) > .header-item__text > .txt--med"
 }

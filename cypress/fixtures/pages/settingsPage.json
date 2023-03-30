@@ -1,0 +1,6 @@
+{
+  "settings": ".layout-1__header-wrapper-fixed > .layout-1__header-secondary > .header-secondary > .header-secondary__right-item > .toggle-menu-wrapper > .toggle-menu-button > .toggle-menu-button--inner",
+  "deleteSettings": ".layout-1__header-wrapper-fixed > .layout-1__header-secondary__menu > .header-secondary-menu > .organizer-menu > .organizer-menu__wrapper > :nth-child(5) > .txt--med",
+  "deleteField": ":nth-child(2) > .form-page-group__main > .frm-wrapper > .frm",
+  "deleteConfirm": ".btn-service"
+}
