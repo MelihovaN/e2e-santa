@@ -5,12 +5,16 @@
   "main": "cypress.config.js",
   "scripts": {
     "cy:open": "npx cypress open",
-    "cy:run": "cypress run"
+    "cy:run": "cypress run",
+    "cy:reporter": "npx cypress run --reporter mocha-junit-reporter"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "cypress": "^12.2.0",
-    "@faker-js/faker": "^7.6.0"
+    "@faker-js/faker": "^7.6.0",
+    "cypress": "^12.2.0"
+  },
+  "devDependencies": {
+    "mocha-junit-reporter": "^2.2.0"
   }
 }

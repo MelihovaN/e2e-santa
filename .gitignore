@@ -1,3 +1,6 @@
+key.json
+test-results.xml
+
 # Logs
 logs
 *.log
@@ -27,3 +30,4 @@ build/Release
 node_modules
 cypress/videos
 cypress/screenshots
+.DS_Store
